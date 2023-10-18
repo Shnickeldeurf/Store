@@ -1,0 +1,245 @@
+body {
+    font-family: monospace;
+}
+
+/*header*/
+header .text-center {
+    background-color: #000;
+    color: #adadad;
+}
+
+header .fa {
+    font-size: 1em;
+}
+
+header .bi-cart {
+    font-size: 1.5em;
+}
+
+header .dropdown-menu {
+    background-color: #000;
+    text-align: center;
+}
+
+header .dropdown-item, header .dropdown-item-text {
+    color: #fff;
+}
+
+header .dropdown-toggle {
+    background-color: #000;
+    color: #fff;
+}
+
+/*modal*/
+.modal .btn-dark {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 0%;
+    transition: 0.3s;
+}
+
+.modal .btn-dark:hover {
+    background-color: #525252;
+    color: #fff;
+}
+
+.modal form {
+    margin: 5% 0;
+}
+
+.modal .form-control, .modal label {
+    margin: 0;
+}
+
+.modal #register {
+    display: none;
+}
+
+/*footer*/
+footer {
+    background-color: #000;
+    color: #fff;
+    padding: 5%;
+}
+
+footer ul {
+    padding: 0;
+    list-style: none;
+}
+
+footer li {
+    padding: 2% 0;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+footer input {
+    background-color: #000;
+    padding-right: 6%;
+    border: none;
+    border-bottom: #adadad solid 1px;
+}
+
+footer .btn {
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 0%;
+    transition: 0.3s;
+}
+
+footer span {
+    padding: 2%;
+}
+
+/*home*/
+#hero {
+    background-image: url("head.jpg");
+    background-size: cover;
+    color: #fff;
+    height: 80vh;
+    padding-top: 14%;
+}
+
+#hero h1 {
+    font-size: 4em;
+    text-shadow: 1px 1px 3px #000;
+}
+
+#hero h5 {
+    font-size: 1em;
+    padding: 0 30% 0 30%;
+    text-shadow: 1px 1px 3px #000;
+}
+
+#hero button {
+    color: #fff;
+    border: 1px solid #c2c2c2;
+    border-radius: 0%;
+}
+
+#hero button:hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+#main section h3 {
+    padding: 2% 0;
+}
+
+#main section img {
+    height: 25vh;
+}
+
+/*cart*/
+#cart section {
+    padding: 8% 1%;
+}
+
+#cart section table {
+    margin: 6% 0;
+}
+
+#cart #checkout {
+    margin-top: 6%;
+}
+
+/*single*/
+#single section {
+    padding: 8% 20%;
+}
+
+#single section img {
+    height: 60vh;
+}
+
+#single section h5 {
+    padding: 5% 0;
+}
+
+#single section input {
+    width: 20%;
+}
+
+#single section button {
+    background-color: #000;
+    color: #fff;
+    width: 100%;
+    margin: 5% 0;
+    padding: 2% 0;
+    border: none;
+    border-radius: 0%;
+    transition: 0.3s;
+}
+
+#single section #singleInfo {
+    border-top: 1px solid #000;
+}
+
+#single section #singleInfo h5 {
+    border-bottom: 1px solid #000;
+}
+
+/*shop*/
+#shop section {
+    padding: 5% 1%;
+}
+
+#shop section .row {
+    margin: 5%;
+}
+
+#shop section h6 {
+    padding: 2% 0;
+}
+
+#shop section img {
+    padding: 2%;
+}
+
+#shop section .col-lg-4 {
+    transition: 0.3s;
+}
+
+#shop section .col-lg-4:hover {
+    background-color: #e0e0e0;
+    cursor: pointer;
+}
+
+/*add*/
+#add section {
+    padding: 5% 10%;
+}
+
+#add section #picPreview {
+    height: 30vh;
+    width: 30vh;
+    border: 1px solid #adadad;
+    margin: 2% 0 10% 0;
+}
+
+#add section input[type="text"] {
+    margin: 2% 0;
+}
+
+#add section button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 0%;
+    padding: 2% 3%;
+    transition: 0.3s;
+}
+
+#add section button:hover {
+    background-color: #525252;
+}
