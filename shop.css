@@ -30,6 +30,10 @@ header .dropdown-toggle {
     color: #fff;
 }
 
+header #adminStuff, header #loBtn {
+    display: none;
+}
+
 /*modal*/
 .modal .btn-dark {
     background-color: #000;
