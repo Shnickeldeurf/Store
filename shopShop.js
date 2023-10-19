@@ -31,7 +31,7 @@ function showItems() {
         show = $("#products");
         show.empty();
         for (var i = 0; i < items.length; i++) {
-            show.append("<div class='col-md-4 item'>" +
+            show.append("<div onclick='showItem(" + i + ")' class='col-md-4 item'>" +
                 "<img src='" + items[i].image + "' class='img-fluid'>" +
                 "<h6>" + items[i].name + "</h6>" +
                 "<p>$" + items[i].price + "</p>" +
@@ -43,6 +43,12 @@ function showItems() {
             $(".btn-danger").show();
         }
     }
+}
+
+function showItem(i) {
+    item = items[i];
+    localStorage.setItem("currentItem", JSON.stringify(item));
+    window.location.href = "single.html";
 }
 
 //delete item
@@ -61,11 +67,6 @@ function checkUser() {
             $("#adminStuff").show();
         }
     }
-}
-
-function showItem() {
-    item = $(this>"h6").text();
-    console.log(item);
 }
 
 //login/logout

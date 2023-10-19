@@ -30,6 +30,12 @@ header .dropdown-toggle {
     color: #fff;
 }
 
+header .dropdown-item:hover {
+    background-color: #ffffff;
+    color: #000000;
+    cursor: pointer;
+}
+
 header #adminStuff, header #loBtn {
     display: none;
 }
@@ -46,6 +52,10 @@ header #adminStuff, header #loBtn {
 .modal .btn-dark:hover {
     background-color: #525252;
     color: #fff;
+}
+
+.modal .nav-item:hover {
+    cursor: pointer;
 }
 
 .modal form {
