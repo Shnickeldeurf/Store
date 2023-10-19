@@ -18,26 +18,40 @@ $(document).ready(function () {
 
     $("#log").click(login);
 
-    showFeatured();
+    showItem();
 
     checkUser();
 })
 
-//show featured
-function showFeatured() {
-    if (items.length > 0) {
-        $("#featuredTitle").show();
-        show = document.getElementById("featured");
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].featured) {
-                show.innerHTML += "<div class='col-md-3 item' onclick='showItem(" + i + ")'>" +
-                    "<img src='" + items[i].image + "' class='img-fluid'>" +
-                    "<h6>" + items[i].name + "</h6>" +
-                    "<p>$" + items[i].price + "</p>" +
-                    "</div>"
-            }
-        }
-    }
+//show item
+if (localStorage.getItem("currentItem") == null) {
+    window.location.href = "shop.html";
+} else {
+    item = JSON.parse(localStorage.getItem("currentItem"));
+}
+
+function showItem() {
+    console.log(item);
+    show = $("#singleShow");
+    show.empty();
+    show.append("<div class='container d-flex'>" +
+        "<div class='col-8'>" +
+        "<img id='singleImg' src='" + item.image + "' class='img-fluid'>" +
+        "</div>" +
+        "<div class='col-4'>" +
+        "<h3>" + item.name + "</h3>" +
+        "<p>" + item.productID + "</p>" +
+        "<h5>$" + item.price + "</h5>" +
+        "<label for='quantity'>Quantity</label><br>" +
+        "<input type='number' id='quantity' value='1'><br>" +
+        "<button>Add To Cart</button>" +
+        "<div id='singleInfo'>" +
+        "<h5>PRODUCT INFO</h5>" +
+        "<h5>RETURN & REFUND POLICY</h5>" +
+        "<h5>SHIPPING INFO</h5>" +
+        "</div>" +
+        "</div>" +
+        "</div>");
 }
 
 function checkUser() {
@@ -49,12 +63,6 @@ function checkUser() {
             $("#adminStuff").show();
         }
     }
-}
-
-function showItem(i) {
-    item = items[i];
-    localStorage.setItem("currentItem", JSON.stringify(item));
-    window.location.href = "single.html";
 }
 
 //login/logout

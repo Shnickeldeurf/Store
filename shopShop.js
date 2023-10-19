@@ -18,26 +18,38 @@ $(document).ready(function () {
 
     $("#log").click(login);
 
-    showFeatured();
+    $(".item").click(showItem);
+
+    showItems();
 
     checkUser();
 })
 
-//show featured
-function showFeatured() {
+function showItems() {
     if (items.length > 0) {
-        $("#featuredTitle").show();
-        show = document.getElementById("featured");
+        $("#noProducts").hide();
+        show = $("#products");
+        show.empty();
         for (var i = 0; i < items.length; i++) {
-            if (items[i].featured) {
-                show.innerHTML += "<div class='col-md-3 item' onclick='showItem(" + i + ")'>" +
-                    "<img src='" + items[i].image + "' class='img-fluid'>" +
-                    "<h6>" + items[i].name + "</h6>" +
-                    "<p>$" + items[i].price + "</p>" +
-                    "</div>"
-            }
+            show.append("<div class='col-md-4 item'>" +
+                "<img src='" + items[i].image + "' class='img-fluid'>" +
+                "<h6>" + items[i].name + "</h6>" +
+                "<p>$" + items[i].price + "</p>" +
+                "<button onclick='deleteItem(" + i + ")' class='btn btn-danger'>Delete</button>" +
+                "</div>"
+            )
+        }
+        if (current.name == "Admin") {
+            $(".btn-danger").show();
         }
     }
+}
+
+//delete item
+function deleteItem(i) {
+    items.splice(i, 1);
+    localStorage.setItem("shopitems", JSON.stringify(items));
+    showItems();
 }
 
 function checkUser() {
@@ -51,10 +63,9 @@ function checkUser() {
     }
 }
 
-function showItem(i) {
-    item = items[i];
-    localStorage.setItem("currentItem", JSON.stringify(item));
-    window.location.href = "single.html";
+function showItem() {
+    item = $(this>"h6").text();
+    console.log(item);
 }
 
 //login/logout

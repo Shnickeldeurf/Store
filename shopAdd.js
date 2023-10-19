@@ -18,10 +18,30 @@ $(document).ready(function () {
 
     $("#log").click(login);
 
-    $(".item").click(showItem);
+    const showPic = (e) => {
+        const file = e.target.files[0];
+        const imageType = /image*/;
+    
+        if (file.type.match(imageType)) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function (e) {
+            $('#picPreview').css('background-image', `url(${reader.result})`);
+            var uPic = reader.result;
+            localStorage.setItem('uPic', uPic);
+        };
+        }
+    };
+
+    $('#pic').on('change', showPic);
+
+    $("#addProduct").click(addItem);
 
     checkUser();
 })
+
+//random 3 digit
+const r3d = Math.floor(Math.random() * 900) + 100;
 
 function checkUser() {
     if (current != null) {
@@ -34,9 +54,44 @@ function checkUser() {
     }
 }
 
-function showItem() {
-    item = $(this>"h6").text();
-    console.log(item);
+function addItem() {
+    var name = $("#name").val();
+    var price = $("#price").val();
+    if (localStorage.getItem("uPic") == null) {
+        alert("Please enter a photo");
+        return;
+    } else {
+        var image = localStorage.getItem("uPic");
+    }
+    var featured = $("#featured").is(":checked");
+    var id = r3d;
+
+    if (name == "") {
+        alert("Please enter a name");
+        return;
+    } else if (price == "") {
+        alert("Please enter a price");
+        return;
+    } else if (isNaN(price) || price < 0) {
+        alert("Please enter a valid price");
+    } else {
+        var item = {
+            name: name,
+            price: price,
+            image: image,
+            featured: featured,
+            productID: id
+        }
+    
+        items.push(item);
+        localStorage.setItem("shopitems", JSON.stringify(items));
+
+        $("#name").val("");
+        $("#price").val("");
+        $("#featured").prop("checked", false);
+        $("#picPreview").css("background-image", "");
+        $("#pic").val("");
+    }
 }
 
 //login/logout
@@ -60,6 +115,14 @@ function login() {
 function logout() {
     localStorage.removeItem("sCurrent");
     window.location.reload();
+}
+
+//get items
+if (localStorage.getItem("shopitems") == null) {
+    items=[];
+    localStorage.setItem("shopitems", JSON.stringify(items));
+} else {
+    items = JSON.parse(localStorage.getItem("shopitems"));
 }
 
 //get users

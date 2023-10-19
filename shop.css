@@ -136,6 +136,15 @@ footer span {
     background-color: rgba(255, 255, 255, 0.3);
 }
 
+#main #featured {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#main #featuredTitle {
+    display: none;
+}
+
 #main section h3 {
     padding: 2% 0;
 }
@@ -160,10 +169,6 @@ footer span {
 /*single*/
 #single section {
     padding: 8% 20%;
-}
-
-#single section img {
-    height: 60vh;
 }
 
 #single section h5 {
@@ -198,8 +203,10 @@ footer span {
     padding: 5% 1%;
 }
 
-#shop section .row {
+#shop section #products {
     margin: 5%;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 #shop section h6 {
@@ -210,13 +217,17 @@ footer span {
     padding: 2%;
 }
 
-#shop section .col-lg-4 {
+.item {
     transition: 0.3s;
 }
 
-#shop section .col-lg-4:hover {
+.item:hover {
     background-color: #e0e0e0;
     cursor: pointer;
+}
+
+#shop section .btn-danger {
+    display: none;
 }
 
 /*add*/
@@ -229,6 +240,7 @@ footer span {
     width: 30vh;
     border: 1px solid #adadad;
     margin: 2% 0 10% 0;
+    background-size: cover;
 }
 
 #add section input[type="text"] {
