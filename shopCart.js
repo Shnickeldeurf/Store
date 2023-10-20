@@ -225,3 +225,16 @@ function showCart() {
     }
     show.innerHTML = "<span><i class='bi-cart'></i></span>" + cart.length;
 }
+
+//mailing list
+if (localStorage.getItem("mailList") == null) {
+    mailList = [];
+    localStorage.setItem("mailList", JSON.stringify(mailList));
+} else {
+    mailList = JSON.parse(localStorage.getItem("mailList"));
+}
+
+function addToList() {
+    email = $("#subEmail").val();
+    localStorage.setItem("mailList", JSON.stringify(mailList));
+}

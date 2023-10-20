@@ -18,48 +18,35 @@ $(document).ready(function () {
 
     $("#log").click(login);
 
-    $(".item").click(showItem);
-
     $("#reg").click(addUser);
-
-    showItems();
 
     checkUser();
 
     showCart();
 })
 
-function showItems() {
-    if (items.length > 0) {
-        $("#noProducts").hide();
-        show = $("#products");
-        show.empty();
-        for (var i = 0; i < items.length; i++) {
-            show.append("<div class='col-md-4 item'>" +
-                "<img onclick='showItem(" + i + ")' src='" + items[i].image + "' class='img-fluid'>" +
-                "<h6 onclick='showItem(" + i + ")'>" + items[i].name + "</h6>" +
-                "<p onclick='showItem(" + i + ")'>$" + items[i].price + "</p>" +
-                "<button onclick='deleteItem(" + i + ")' class='btn btn-danger'>Delete</button>" +
-                "</div>"
-            )
+//add return
+function addReturn() {
+    var email = $("#email").val();
+    var orderNum = $("#ordNum").val();
+    var reason = $("#reason").val();
+
+    if (email == "" || orderNum == "" || reason == "") {
+        alert("Please enter all fields");
+        return;
+    } else if (!email.includes("@") || !email.includes(".")) {
+        alert("Please enter a valid email");
+        return;
+    } else {
+        newReturn = {
+            email: email,
+            orderNum: orderNum,
+            reason: reason,
         }
-        if (current != null && current.name == "Admin") {
-            $(".btn-danger").show();
-        }
+
+        returns.push(newReturn);
+        localStorage.setItem("returns", JSON.stringify(returns));
     }
-}
-
-function showItem(i) {
-    item = items[i];
-    localStorage.setItem("currentItem", JSON.stringify(item));
-    window.location.href = "single.html";
-}
-
-//delete item
-function deleteItem(i) {
-    items.splice(i, 1);
-    localStorage.setItem("shopitems", JSON.stringify(items));
-    showItems();
 }
 
 //All
@@ -213,4 +200,12 @@ if (localStorage.getItem("mailList") == null) {
 function addToList() {
     email = $("#subEmail").val();
     localStorage.setItem("mailList", JSON.stringify(mailList));
+}
+
+//get returns
+if (localStorage.getItem("returns") == null) {
+    returns=[];
+    localStorage.setItem("returns", JSON.stringify(returns));
+} else {
+    returns = JSON.parse(localStorage.getItem("returns"));
 }
