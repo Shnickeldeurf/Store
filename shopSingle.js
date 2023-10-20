@@ -21,7 +21,35 @@ $(document).ready(function () {
     showItem();
 
     checkUser();
+
+    showCart();
 })
+
+//add to cart
+function addToCart() {
+    quantity = $("#quantity").val();
+    item.quantity = quantity;
+    for (var i = 0; i < cart.length; i++) {
+        if (cart[i].productID == item.productID) {
+            newQuantity = +cart[i].quantity + +item.quantity;
+            cart[i].quantity = newQuantity;
+            console.log(cart);
+            return;
+        }
+    }
+    cart.push(item);
+    if (localStorage.getItem("current") == null) {
+        localStorage.setItem(current.name + "cart", JSON.stringify(cart));
+    } else {
+        localStorage.setItem("guestCart", JSON.stringify(cart));
+    }
+    console.log(cart);
+    showCart();
+}
+
+function goCart() {
+    window.location.href = "cart.html";
+}
 
 //show item
 if (localStorage.getItem("currentItem") == null) {
@@ -31,7 +59,6 @@ if (localStorage.getItem("currentItem") == null) {
 }
 
 function showItem() {
-    console.log(item);
     show = $("#singleShow");
     show.empty();
     show.append("<div class='container d-flex'>" +
@@ -44,7 +71,7 @@ function showItem() {
         "<h5>$" + item.price + "</h5>" +
         "<label for='quantity'>Quantity</label><br>" +
         "<input type='number' id='quantity' value='1'><br>" +
-        "<button>Add To Cart</button>" +
+        "<button type='button' onclick='addToCart()'>Add To Cart</button>" +
         "<div id='singleInfo'>" +
         "<h5>PRODUCT INFO</h5>" +
         "<h5>RETURN & REFUND POLICY</h5>" +
@@ -54,6 +81,9 @@ function showItem() {
         "</div>");
 }
 
+//All
+
+//check user
 function checkUser() {
     if (current != null) {
         $("#username").text(current.name);
@@ -118,14 +148,27 @@ if (localStorage.getItem("sCurrent") == null) {
 }
 
 //get cart
-if (current != null && localStorage.getItem(current.name + "cart") == null) {
-    cart=[];
-    localStorage.setItem(current.name + "cart", JSON.stringify(cart));
-} else if (current == null && localStorage.getItem("guestcart") == null) {
-    cart=[];
-    localStorage.setItem("guestcart", JSON.stringify(cart));
-} else if (current != null && localStorage.getItem(current.name + "cart") != null) {
-    cart = JSON.parse(localStorage.getItem(current.name + "cart"));
-} else if (current == null && localStorage.getItem("guestcart") != null) {
-    cart = JSON.parse(localStorage.getItem("guestcart"));
+if (current != null) {
+    if (localStorage.getItem(current.name + "cart") == null) {
+        cart = [];
+        localStorage.setItem(current.name + "cart", JSON.stringify(cart));
+    } else {
+        cart = JSON.parse(localStorage.getItem(current.name + "cart"));
+    }
+} else if (current == null) {
+    if (localStorage.getItem("guestCart") == null) {
+        cart = [];
+        localStorage.setItem("guestCart", JSON.stringify(cart));
+    } else {
+        cart = JSON.parse(localStorage.getItem("guestCart"));
+    }
+    
+}
+
+function showCart() {
+    show = document.getElementById("cartCount");
+    if (cart.length == 0) {
+        show.innerHTML = "<span><i class='bi-cart'></i></span>" + "0";
+    }
+    show.innerHTML = "<span onclick='goCart()'><i class='bi-cart'></i></span>" + cart.length;
 }

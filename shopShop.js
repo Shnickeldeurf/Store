@@ -58,6 +58,9 @@ function deleteItem(i) {
     showItems();
 }
 
+//All
+
+//check user
 function checkUser() {
     if (current != null) {
         $("#username").text(current.name);
@@ -122,14 +125,27 @@ if (localStorage.getItem("sCurrent") == null) {
 }
 
 //get cart
-if (current != null && localStorage.getItem(current.name + "cart") == null) {
-    cart=[];
-    localStorage.setItem(current.name + "cart", JSON.stringify(cart));
-} else if (current == null && localStorage.getItem("guestcart") == null) {
-    cart=[];
-    localStorage.setItem("guestcart", JSON.stringify(cart));
-} else if (current != null && localStorage.getItem(current.name + "cart") != null) {
-    cart = JSON.parse(localStorage.getItem(current.name + "cart"));
-} else if (current == null && localStorage.getItem("guestcart") != null) {
-    cart = JSON.parse(localStorage.getItem("guestcart"));
+if (current != null) {
+    if (localStorage.getItem(current.name + "cart") == null) {
+        cart = [];
+        localStorage.setItem(current.name + "cart", JSON.stringify(cart));
+    } else {
+        cart = JSON.parse(localStorage.getItem(current.name + "cart"));
+    }
+} else if (current == null) {
+    if (localStorage.getItem("guestCart") == null) {
+        cart = [];
+        localStorage.setItem("guestCart", JSON.stringify(cart));
+    } else {
+        cart = JSON.parse(localStorage.getItem("guestCart"));
+    }
+    
+}
+
+function showCart() {
+    show = document.getElementById("cartCount");
+    if (cart.length == 0) {
+        show.innerHTML = "<span><i class='bi-cart'></i></span>" + "0";
+    }
+    show.innerHTML = "<span onclick='goCart()'><i class='bi-cart'></i></span>" + cart.length;
 }
