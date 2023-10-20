@@ -12,6 +12,10 @@ header .fa {
     font-size: 1em;
 }
 
+header #cartCount:hover {
+    cursor: pointer;
+}
+
 header .bi-cart {
     font-size: 1.5em;
 }
@@ -30,6 +34,11 @@ header .dropdown-toggle {
     color: #fff;
 }
 
+header .dropdown-toggle:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
 header .dropdown-item:hover {
     background-color: #ffffff;
     color: #000000;
@@ -38,6 +47,10 @@ header .dropdown-item:hover {
 
 header #adminStuff, header #loBtn {
     display: none;
+}
+
+header #loBtn:hover {
+    cursor: pointer;
 }
 
 /*modal*/
@@ -174,6 +187,10 @@ footer span {
 
 #cart #checkout {
     margin-top: 6%;
+}
+
+#cart #cartContainer, #cart #checkout {
+    display: none;
 }
 
 /*single*/

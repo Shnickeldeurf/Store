@@ -20,35 +20,87 @@ $(document).ready(function () {
 
     $("#reg").click(addUser);
 
-    showFeatured();
-
     checkUser();
+
+    showCart();
+
+    showCartItems();
 })
 
-//show featured
-function showFeatured() {
-    if (items.length > 0) {
-        $("#featuredTitle").show();
-        show = document.getElementById("featured");
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].featured) {
-                show.innerHTML += "<div class='col-md-3 item' onclick='showItem(" + i + ")'>" +
-                    "<img src='" + items[i].image + "' class='img-fluid'>" +
-                    "<h6>" + items[i].name + "</h6>" +
-                    "<p>$" + items[i].price + "</p>" +
-                    "</div>"
-            }
-        }
+//show cart items
+function showCartItems() {
+    if (cart.length > 0) {
+        $("#cartEmpty").hide();
+        $("#cartContainer").show();
+        $("#checkout").show();
     }
-}
+    show = document.getElementById("cartBody");
+    showTotal = document.getElementById("total");total = 0;
+    for (var i = 0; i < cart.length; i++) {
+        itemTotal = +cart[i].price * +cart[i].quantity;
+        total += itemTotal;
+        show.innerHTML += "<td>" + cart[i].productID + "</td>" +
+            "<td>" + cart[i].name + "</td>" +
+            "<td>$" + cart[i].price + "</td>" +
+            "<td>$" + itemTotal + "</td>" +
+            "<td>" + cart[i].quantity + "</td>" +
+            "<td><button onclick='deleteCart(" + i + ")' class='btn btn-danger'>Delete</button></td>"
+    }
 
-function showItem(i) {
-    item = items[i];
-    localStorage.setItem("currentItem", JSON.stringify(item));
-    window.location.href = "single.html";
+    showTotal.innerHTML = total
 }
 
 //All
+
+//go to cart
+function goCart() {
+    window.location.href = "cart.html";
+}
+
+//add user
+function addUser() {
+    var name = $("#rName").val();
+    var email = $("#rEmail").val();
+    var phone = $("#rPhone").val();
+    var password = $("#rPass").val();
+    user = {}
+    var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+
+    if (name == "") {
+        alert("Please enter a name");
+        return;
+    } else if (email == "") {
+        alert("Please enter an email");
+        return;
+    } else if (email.indexOf("@") == -1 || email.indexOf(".") == -1) {
+        alert("Please enter a valid email");
+        return;
+    }else if (phone == "") {
+        alert("Please enter a phone number");
+        return;
+    } else if (!re.test(phone)) {
+        alert("Please enter a valid phone number");
+        return;
+    } else if (password == "") {
+        alert("Please enter a password");
+        return;
+    } else {
+        user.name = name;
+        user.email = email;
+        user.phone = phone;
+        user.password = password;
+        users.push(user);
+        localStorage.setItem("shopusers", JSON.stringify(users));
+
+        $("#rName").val("");
+        $("#rEmail").val("");
+        $("#rPhone").val("");
+        $("#rPass").val("");
+
+        $("#login").show();
+        $("#register").hide();
+    }
+}
 
 //check user
 function checkUser() {
@@ -77,7 +129,20 @@ function login() {
             pass.value = "";
         }
     }
-    console.log(current)
+    
+    if (cart.length > 0) {
+        if (localStorage.getItem(current.name + "cart") != null) {
+            currentCart = JSON.parse(localStorage.getItem(current.name + "cart"));
+            for (i = 0; i < cart.length; i++) {
+                currentCart.push(cart[i]);
+                localStorage.setItem(current.name + "cart", JSON.stringify(currentCart));
+                localStorage.removeItem("guestCart");
+            }
+        } else {
+            localStorage.setItem(current.name + "cart", JSON.stringify(cart));
+            localStorage.removeItem("guestCart");
+        }
+    }
 }
 
 function logout() {
@@ -137,5 +202,5 @@ function showCart() {
     if (cart.length == 0) {
         show.innerHTML = "<span><i class='bi-cart'></i></span>" + "0";
     }
-    show.innerHTML = "<span onclick='goCart()'><i class='bi-cart'></i></span>" + cart.length;
+    show.innerHTML = "<span><i class='bi-cart'></i></span>" + cart.length;
 }

@@ -18,82 +18,36 @@ $(document).ready(function () {
 
     $("#log").click(login);
 
-    const showPic = (e) => {
-        const file = e.target.files[0];
-        const imageType = /image*/;
-    
-        if (file.type.match(imageType)) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function (e) {
-            $('#picPreview').css('background-image', `url(${reader.result})`);
-            var uPic = reader.result;
-            localStorage.setItem('uPic', uPic);
-        };
-        }
-    };
+    $("#reg").click(addUser);
 
-    $('#pic').on('change', showPic);
-
-    $("#addProduct").click(addItem);
+    showFeatured();
 
     checkUser();
 
     showCart();
 })
 
-//random 3 digit
-const r3d = Math.floor(Math.random() * 900) + 100;
-
-function checkUser() {
-    if (current != null) {
-        $("#username").text(current.name);
-        $("#liBtn").hide();
-        $('#loBtn').show();
-        if (current.name == "Admin") {
-            $("#adminStuff").show();
+//show featured
+function showFeatured() {
+    if (items.length > 0) {
+        $("#featuredTitle").show();
+        show = document.getElementById("featured");
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].featured) {
+                show.innerHTML += "<div class='col-md-3 item' onclick='showItem(" + i + ")'>" +
+                    "<img src='" + items[i].image + "' class='img-fluid'>" +
+                    "<h6>" + items[i].name + "</h6>" +
+                    "<p>$" + items[i].price + "</p>" +
+                    "</div>"
+            }
         }
     }
 }
 
-function addItem() {
-    var name = $("#name").val();
-    var price = $("#price").val();
-    if (localStorage.getItem("uPic") == null) {
-        alert("Please enter a photo");
-        return;
-    } else {
-        var image = localStorage.getItem("uPic");
-    }
-    var featured = $("#featured").is(":checked");
-    var id = r3d;
-
-    if (name == "") {
-        alert("Please enter a name");
-        return;
-    } else if (price == "") {
-        alert("Please enter a price");
-        return;
-    } else if (isNaN(price) || price < 0) {
-        alert("Please enter a valid price");
-    } else {
-        var item = {
-            name: name,
-            price: price,
-            image: image,
-            featured: featured,
-            productID: id
-        }
-    
-        items.push(item);
-        localStorage.setItem("shopitems", JSON.stringify(items));
-
-        $("#name").val("");
-        $("#price").val("");
-        $("#featured").prop("checked", false);
-        $("#picPreview").css("background-image", "");
-        $("#pic").val("");
-    }
+function showItem(i) {
+    item = items[i];
+    localStorage.setItem("currentItem", JSON.stringify(item));
+    window.location.href = "single.html";
 }
 
 //All
