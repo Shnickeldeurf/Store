@@ -70,8 +70,6 @@ function addItem() {
 
     var featured = $("#featured").is(":checked");
 
-console.log(id)
-
     if (name == "") {
         alert("Please enter a name");
         return;
@@ -170,7 +168,6 @@ function login() {
     var pass = $("#lPass").val();
 
     for (var i = 0; i < users.length; i++) {
-        console.log(users[i])
         if (users[i].email == email && users[i].password == pass) {
             current = users[i];
             localStorage.setItem("sCurrent", JSON.stringify(current));

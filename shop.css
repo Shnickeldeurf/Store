@@ -229,6 +229,10 @@ footer span {
     cursor: pointer;
 }
 
+#single #singleModal button {
+    margin: 5%;
+}
+
 /*shop*/
 #shop section {
     padding: 5% 1%;

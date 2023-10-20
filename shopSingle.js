@@ -9,7 +9,7 @@ $(document).ready(function () {
     });
 
     $("#liBtn").click(function () {
-        $(".modal").modal("show");
+        $("#myModal").modal("show");
     });
 
     $("#loBtn").click(function () {
@@ -190,9 +190,6 @@ function addUser() {
         $("#rEmail").val("");
         $("#rPhone").val("");
         $("#rPass").val("");
-
-        $("#login").show();
-        $("#register").hide();
     }
 }
 
@@ -224,7 +221,6 @@ function login() {
     var pass = $("#lPass").val();
 
     for (var i = 0; i < users.length; i++) {
-        console.log(users[i])
         if (users[i].email == email && users[i].password == pass) {
             current = users[i];
             localStorage.setItem("sCurrent", JSON.stringify(current));
