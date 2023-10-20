@@ -20,6 +20,8 @@ $(document).ready(function () {
 
     $("#reg").click(addUser);
 
+    $("#checkoutBtn").click(placeOrder);
+
     checkUser();
 
     showCart();
@@ -33,9 +35,16 @@ function showCartItems() {
         $("#cartEmpty").hide();
         $("#cartContainer").show();
         $("#checkout").show();
+    } else {
+        $("#cartEmpty").show();
+        $("#cartContainer").hide();
+        $("#checkout").hide();
     }
     show = document.getElementById("cartBody");
-    showTotal = document.getElementById("total");total = 0;
+    showTotal = document.getElementById("total");
+    total = 0;
+
+    show.innerHTML = "";
     for (var i = 0; i < cart.length; i++) {
         itemTotal = +cart[i].price * +cart[i].quantity;
         total += itemTotal;
@@ -48,6 +57,33 @@ function showCartItems() {
     }
 
     showTotal.innerHTML = total
+}
+
+//delete cart
+function deleteCart(index) {
+    cart.splice(index, 1);
+    if (current != null) {
+        localStorage.setItem(current.name + "cart", JSON.stringify(cart));
+    } else {
+        localStorage.setItem("guestCart", JSON.stringify(cart));
+    }
+    showCartItems();
+    showCart();
+}
+
+//place order
+function placeOrder() {
+    if (current != null) {
+        localStorage.setItem(current.name + "order", JSON.stringify(cart));
+        localStorage.removeItem(current.name + "cart");
+    } else if (current == null) {
+        localStorage.setItem("guestOrder", JSON.stringify(cart));
+        localStorage.removeItem("guestCart");
+    }
+
+    cart = [];
+    showCart();
+    showCartItems();
 }
 
 //All
@@ -127,20 +163,6 @@ function login() {
             window.location.reload();
             email.value = "";
             pass.value = "";
-        }
-    }
-    
-    if (cart.length > 0) {
-        if (localStorage.getItem(current.name + "cart") != null) {
-            currentCart = JSON.parse(localStorage.getItem(current.name + "cart"));
-            for (i = 0; i < cart.length; i++) {
-                currentCart.push(cart[i]);
-                localStorage.setItem(current.name + "cart", JSON.stringify(currentCart));
-                localStorage.removeItem("guestCart");
-            }
-        } else {
-            localStorage.setItem(current.name + "cart", JSON.stringify(cart));
-            localStorage.removeItem("guestCart");
         }
     }
 }

@@ -20,6 +20,8 @@ $(document).ready(function () {
 
     $(".item").click(showItem);
 
+    $("#reg").click(addUser);
+
     showItems();
 
     checkUser();
@@ -33,10 +35,10 @@ function showItems() {
         show = $("#products");
         show.empty();
         for (var i = 0; i < items.length; i++) {
-            show.append("<div onclick='showItem(" + i + ")' class='col-md-4 item'>" +
-                "<img src='" + items[i].image + "' class='img-fluid'>" +
-                "<h6>" + items[i].name + "</h6>" +
-                "<p>$" + items[i].price + "</p>" +
+            show.append("<div class='col-md-4 item'>" +
+                "<img onclick='showItem(" + i + ")' src='" + items[i].image + "' class='img-fluid'>" +
+                "<h6 onclick='showItem(" + i + ")'>" + items[i].name + "</h6>" +
+                "<p onclick='showItem(" + i + ")'>$" + items[i].price + "</p>" +
                 "<button onclick='deleteItem(" + i + ")' class='btn btn-danger'>Delete</button>" +
                 "</div>"
             )
@@ -137,20 +139,6 @@ function login() {
             window.location.reload();
             email.value = "";
             pass.value = "";
-        }
-    }
-    
-    if (cart.length > 0) {
-        if (localStorage.getItem(current.name + "cart") != null) {
-            currentCart = JSON.parse(localStorage.getItem(current.name + "cart"));
-            for (i = 0; i < cart.length; i++) {
-                currentCart.push(cart[i]);
-                localStorage.setItem(current.name + "cart", JSON.stringify(currentCart));
-                localStorage.removeItem("guestCart");
-            }
-        } else {
-            localStorage.setItem(current.name + "cart", JSON.stringify(cart));
-            localStorage.removeItem("guestCart");
         }
     }
 }

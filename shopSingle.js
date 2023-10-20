@@ -18,6 +18,8 @@ $(document).ready(function () {
 
     $("#log").click(login);
 
+    $("#reg").click(addUser);
+
     showItem();
 
     checkUser();
@@ -28,22 +30,68 @@ $(document).ready(function () {
 //add to cart
 function addToCart() {
     quantity = $("#quantity").val();
-    item.quantity = quantity;
-    for (var i = 0; i < cart.length; i++) {
-        if (cart[i].productID == item.productID) {
-            newQuantity = +cart[i].quantity + +item.quantity;
-            cart[i].quantity = newQuantity;
-            localStorage.setItem(current.name + "cart", JSON.stringify(cart));
-            return;
-        }
+    if (quantity < 1) {
+        alert("Invalid quantity");
+        return;
     }
-    cart.push(item);
-    if (localStorage.getItem("current") != null) {
+
+    item.quantity = quantity;
+    if (current != null) {
+        for (var i = 0; i < cart.length; i++) {
+            if (cart[i].productID == item.productID) {
+                newQuantity = +cart[i].quantity + +item.quantity;
+                cart[i].quantity = newQuantity;
+                localStorage.setItem(current.name + "cart", JSON.stringify(cart));
+                modal = $("#singleModal");
+                modalBody = $("#singleModalBody");
+            
+                modalBody.empty();
+                modalBody.append("<h5>Item added to cart</h5>" 
+                                + "<button onclick='goCart()' class='btn btn-success'>Go to Cart</button>" 
+                                + "<button onclick='goShop()' class='btn btn-warning'>Continue Shopping</button>");
+            
+                modal.modal("show");
+                return;
+            }
+        }
+        cart.push(item);
         localStorage.setItem(current.name + "cart", JSON.stringify(cart));
     } else {
+        for (var i = 0; i < cart.length; i++) {
+            if (cart[i].productID == item.productID) {
+                newQuantity = +cart[i].quantity + +item.quantity;
+                cart[i].quantity = newQuantity;
+                localStorage.setItem("guestCart", JSON.stringify(cart));
+                modal = $("#singleModal");
+                modalBody = $("#singleModalBody");
+            
+                modalBody.empty();
+                modalBody.append("<h5>Item added to cart</h5>" 
+                                + "<button onclick='goCart()' class='btn btn-success'>Go to Cart</button>" 
+                                + "<button onclick='goShop()' class='btn btn-warning'>Continue Shopping</button>");
+            
+                modal.modal("show");
+                return;
+            }
+        }
+        cart.push(item);
         localStorage.setItem("guestCart", JSON.stringify(cart));
     }
     showCart();
+
+    modal = $("#singleModal");
+    modalBody = $("#singleModalBody");
+
+    modalBody.empty();
+    modalBody.append("<h5>Item added to cart</h5>" 
+                    + "<button onclick='goCart()' class='btn btn-success'>Go to Cart</button>" 
+                    + "<button onclick='goShop()' class='btn btn-warning'>Continue Shopping</button>");
+
+    modal.modal("show");
+}
+
+function goShop() {
+    window.location.href = "shop.html";
 }
 
 //show item
@@ -68,12 +116,32 @@ function showItem() {
         "<input type='number' id='quantity' value='1'><br>" +
         "<button type='button' onclick='addToCart()'>Add To Cart</button>" +
         "<div id='singleInfo'>" +
-        "<h5>PRODUCT INFO</h5>" +
-        "<h5>RETURN & REFUND POLICY</h5>" +
-        "<h5>SHIPPING INFO</h5>" +
+        "<h5 onclick='showPInfo()'>PRODUCT INFO</h5>" +
+        "<h5 onclick='goPolicy()'>RETURN & REFUND POLICY</h5>" +
+        "<h5 onclick='goShipping()'>SHIPPING INFO</h5>" +
         "</div>" +
         "</div>" +
         "</div>");
+}
+
+function goShipping() {
+    window.location.href = "shipping.html";
+}
+
+function goPolicy() {
+    window.location.href = "policy.html";
+}
+
+function showPInfo() {
+    modal = $("#singleModal");
+    modalBody = $("#singleModalBody");
+
+    modalBody.empty();
+    modalBody.append("<h5>PRODUCT INFO</h5>"
+                    + "<p>" + item.name + "</p>" 
+                    + "<p>" + item.price + "</p>"
+                    + "<p>" + item.productID + "</p>");
+    modal.modal("show");
 }
 
 //All
@@ -141,6 +209,16 @@ function checkUser() {
 }
 
 //login/logout
+function removeDuplicates(arr) { 
+    var unique = []; 
+    for (var i = 0; i < arr.length; i++) { 
+        if (unique.indexOf(arr[i].name) === -1) { 
+            unique.push(arr[i]); 
+        } 
+    } 
+    return unique; 
+}
+
 function login() {
     var email = $("#lEmail").val();
     var pass = $("#lPass").val();
@@ -153,20 +231,6 @@ function login() {
             window.location.reload();
             email.value = "";
             pass.value = "";
-        }
-    }
-    
-    if (cart.length > 0) {
-        if (localStorage.getItem(current.name + "cart") != null) {
-            currentCart = JSON.parse(localStorage.getItem(current.name + "cart"));
-            for (i = 0; i < cart.length; i++) {
-                currentCart.push(cart[i]);
-                localStorage.setItem(current.name + "cart", JSON.stringify(currentCart));
-                localStorage.removeItem("guestCart");
-            }
-        } else {
-            localStorage.setItem(current.name + "cart", JSON.stringify(cart));
-            localStorage.removeItem("guestCart");
         }
     }
 }

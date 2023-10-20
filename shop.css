@@ -225,6 +225,10 @@ footer span {
     border-bottom: 1px solid #000;
 }
 
+#single section #singleInfo h5:hover {
+    cursor: pointer;
+}
+
 /*shop*/
 #shop section {
     padding: 5% 1%;

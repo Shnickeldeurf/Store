@@ -18,6 +18,8 @@ $(document).ready(function () {
 
     $("#log").click(login);
 
+    $("#reg").click(addUser);
+
     const showPic = (e) => {
         const file = e.target.files[0];
         const imageType = /image*/;
@@ -43,17 +45,8 @@ $(document).ready(function () {
 })
 
 //random 3 digit
-const r3d = Math.floor(Math.random() * 900) + 100;
-
-function checkUser() {
-    if (current != null) {
-        $("#username").text(current.name);
-        $("#liBtn").hide();
-        $('#loBtn').show();
-        if (current.name == "Admin") {
-            $("#adminStuff").show();
-        }
-    }
+function r3d() {
+    return Math.floor(Math.random() * 900) + 100;
 }
 
 function addItem() {
@@ -65,8 +58,19 @@ function addItem() {
     } else {
         var image = localStorage.getItem("uPic");
     }
+
+    var id = r3d();
+
+    for (var i = 0; i < items.length; i++) {
+        if (items[i].productID == id) {
+            alert("Error: Please Resubmit");
+            return;
+        }
+    }
+
     var featured = $("#featured").is(":checked");
-    var id = r3d;
+
+console.log(id)
 
     if (name == "") {
         alert("Please enter a name");
@@ -173,20 +177,6 @@ function login() {
             window.location.reload();
             email.value = "";
             pass.value = "";
-        }
-    }
-    
-    if (cart.length > 0) {
-        if (localStorage.getItem(current.name + "cart") != null) {
-            currentCart = JSON.parse(localStorage.getItem(current.name + "cart"));
-            for (i = 0; i < cart.length; i++) {
-                currentCart.push(cart[i]);
-                localStorage.setItem(current.name + "cart", JSON.stringify(currentCart));
-                localStorage.removeItem("guestCart");
-            }
-        } else {
-            localStorage.setItem(current.name + "cart", JSON.stringify(cart));
-            localStorage.removeItem("guestCart");
         }
     }
 }

@@ -20,6 +20,10 @@ $(document).ready(function () {
 
     $("#reg").click(addUser);
 
+    $("#shopBtn").click(function () {
+        window.location.href = "shop.html";
+    })
+
     showFeatured();
 
     checkUser();
@@ -127,20 +131,6 @@ function login() {
             window.location.reload();
             email.value = "";
             pass.value = "";
-        }
-    }
-    
-    if (cart.length > 0) {
-        if (localStorage.getItem(current.name + "cart") != null) {
-            currentCart = JSON.parse(localStorage.getItem(current.name + "cart"));
-            for (i = 0; i < cart.length; i++) {
-                currentCart.push(cart[i]);
-                localStorage.setItem(current.name + "cart", JSON.stringify(currentCart));
-                localStorage.removeItem("guestCart");
-            }
-        } else {
-            localStorage.setItem(current.name + "cart", JSON.stringify(cart));
-            localStorage.removeItem("guestCart");
         }
     }
 }
