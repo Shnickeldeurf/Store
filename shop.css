@@ -130,8 +130,8 @@ footer span {
 
 /*home*/
 #hero {
-    background-image: url("head.jpg");
-    background-size: cover;
+    background-image: url("logo-back.png");
+    background-size: fill;
     color: #fff;
     height: 80vh;
     padding-top: 14%;
